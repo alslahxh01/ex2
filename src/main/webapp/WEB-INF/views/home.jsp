@@ -16,6 +16,8 @@
 <ul>
 <li>choa</li>
 <li>BugFix_1</li>
+<li>BugFix_2</li>
+<li>BugFix_3</li>
 </ul>
 
 </body>
