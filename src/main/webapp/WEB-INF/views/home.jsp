@@ -25,5 +25,7 @@
 <li>Conflict_1</li>
 </ul>
 
+<a href="notice/noticeList">List gogogo</a>
+
 </body>
 </html>

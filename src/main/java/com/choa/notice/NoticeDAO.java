@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.choa.util.DBConnector;
 import com.choa.util.RowMaker;
-@Repository
+@Repository("notice") //notice 가 아이디가 되는것
 //NoticeDAO noticeDAO = new NoticeDAO
 public class NoticeDAO {
 

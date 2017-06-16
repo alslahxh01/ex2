@@ -3,6 +3,8 @@ package com.choa.ex2;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.choa.notice.NoticeDAO;
 import com.choa.notice.NoticeDTO;
 import com.choa.notice.NoticeService;
 
@@ -18,9 +21,14 @@ import com.choa.notice.NoticeService;
 public class NoticeController {
 	//Inject 를 사용하여 DI 를 해달라고 Spring에게 전달하면 Spring Container 가 알아서 new ~~ 해줌 - xml로 가서 코드 쓰면됨.
 	
-	@Inject //만들어진 서비스를 주입시키기
+	@Autowired //만들어진 서비스를 주입시키기
 	private NoticeService noticeService;
 	
+	@RequestMapping(value="test")
+	public void test(){
+		System.out.println(noticeService);
+		noticeService.test();
+	}
 	
 	//List
 @RequestMapping(value="noticeList" , method=RequestMethod.GET )
@@ -45,7 +53,9 @@ public class NoticeController {
 	
 	//WriteForm
 	@RequestMapping(value="noticeWrite" , method=RequestMethod.GET )
-		public void noticeWrite(){}	
+		public void noticeWrite(Model model){
+			model.addAttribute("path","Write");
+	}	
 	//write(DB)
 	@RequestMapping(value="noticeWrite" , method=RequestMethod.POST )
 	public String noticeWrite(RedirectAttributes rd,NoticeDTO noticeDTO) throws Exception{
@@ -68,7 +78,15 @@ public class NoticeController {
 	
 	//UpdateFOrm
 	@RequestMapping(value="noticeUpdate" , method=RequestMethod.GET )
-	public void noticeUpdate(){}
+	public String noticeUpdate(Integer num, Model model) throws Exception{
+		NoticeDTO noticeDTO = noticeService.noticeView(num);		
+		
+		model.addAttribute("dto",noticeDTO);
+		model.addAttribute("path", "Update");
+		
+		return "notice/noticeWrite";
+		
+	}
 	//Update
 	@RequestMapping(value="noticeUpdate" , method=RequestMethod.POST )
 	public String noticeUpdate(RedirectAttributes rd,NoticeDTO noticeDTO) throws Exception{			
